@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "example1.jpg",
+    "caption": "Caption under photo 1"
+  },
+  {
+    "filename": "example2.jpg",
+    "caption": "Caption under photo 2"
+  }
+]
