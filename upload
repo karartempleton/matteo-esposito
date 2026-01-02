@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Upload Photo</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="upload-main">
+    <h2>Upload Photo</h2>
+    <form id="uploadForm" action="/api/upload" method="post" enctype="multipart/form-data">
+      <label>
+        Photo (jpg, png, gif — max 10MB)
+        <input type="file" name="photo" accept="image/*" required />
+      </label>
+      <label>
+        Caption (subtitle displayed under photo)
+        <input type="text" name="caption" maxlength="200" placeholder="Short caption" />
+      </label>
+      <button type="submit">Upload</button>
+    </form>
+    <p><a href="/">Back to gallery</a></p>
+  </main>
+  <script>
+    // Intercept submit and use fetch to stay on the page
+    const form = document.getElementById('uploadForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Uploading...';
+      const res = await fetch('/api/upload', { method: 'POST', body: data });
+      submitButton.disabled = false;
+      submitButton.textContent = 'Upload';
+      if (res.ok) {
+        alert('Uploaded successfully');
+        window.location.href = '/';
+      } else {
+        const js = await res.json().catch(() => ({}));
+        alert('Upload failed: ' + (js.error || res.statusText));
+      }
+    });
+  </script>
+</body>
+</html>
