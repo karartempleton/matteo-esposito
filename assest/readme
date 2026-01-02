@@ -1,0 +1,32 @@
+# Static Portfolio (GitHub Pages, no payment)
+
+This is a static portfolio gallery that uses GitHub Pages and stores images directly in the repository. No third-party paid services required.
+
+How it works
+- Put image files in the `images/` folder.
+- Add or update `images.json` (root of repo) with objects that list filename + caption.
+- The static site (index.html) reads `images.json` and shows each photo with a black caption under it.
+- Host with GitHub Pages (free).
+
+How to add a photo (quick, using GitHub web UI)
+1. In this repo click "Add file" → "Upload files".
+2. Choose your photo(s) and upload them into the `images/` folder (create the folder if needed).
+3. Commit the files.
+4. Edit `images.json` in the repo (click the file → pencil icon) and add an entry:
+   ```json
+   {
+     "filename": "your-photo.jpg",
+     "caption": "Short subtitle shown under the photo"
+   }
+   ```
+   Keep the file list order as you want the gallery order (top-first).
+5. Commit the change to `images.json`.
+
+Enable GitHub Pages
+1. Go to the repository Settings → Pages.
+2. Choose branch: `main` (or your default branch) and folder: `/ (root)`.
+3. Save. The site will be available at `https://<your-username>.github.io/<repo-name>/` within a minute or two.
+
+Notes & optional improvements (all free)
+- Bulk edits: you can upload multiple images with the web UI in one commit.
+- I can add a small GitHub Action that regenerates `images.json` automatically from the `/images` folder on each push so you only need to upload images (free to run). Tell me if you want that.
