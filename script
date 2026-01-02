@@ -1,0 +1,31 @@
+async function loadGallery(){
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '<p>Loading…</p>';
+  try {
+    const res = await fetch('/api/images');
+    if (!res.ok) throw new Error('Failed to load images');
+    const images = await res.json();
+    if (!images.length) {
+      gallery.innerHTML = '<p>No photos yet. Use "Upload a photo" to add one.</p>';
+      return;
+    }
+    gallery.innerHTML = '';
+    images.forEach(img => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const imageEl = document.createElement('img');
+      imageEl.src = img.url;
+      imageEl.alt = img.caption || img.filename;
+      const caption = document.createElement('div');
+      caption.className = 'caption';
+      caption.textContent = img.caption || '';
+      card.appendChild(imageEl);
+      card.appendChild(caption);
+      gallery.appendChild(card);
+    });
+  } catch (err) {
+    gallery.innerHTML = '<p>Unable to load gallery.</p>';
+    console.error(err);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadGallery);
